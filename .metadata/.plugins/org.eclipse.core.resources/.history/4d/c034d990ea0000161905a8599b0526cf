@@ -1,0 +1,135 @@
+ /**
+  * @author Manasi Bharde and Paridhi Srivastava
+ * This program calculates odd partitions' combinations by dynamic programming and even partitions' combinations by greedy
+ */
+ 
+
+import java.util.Scanner;
+
+public class Partitions {
+	
+	static Scanner s = new Scanner(System.in);
+	static int[] oddArray; 
+
+	public static void main(String[] args) {
+		int size = s.nextInt();
+		s.nextLine();
+		int[] intArray = new int[size];
+		for(int i = 0; i < size; i++){
+			intArray[i] = s.nextInt();
+		}		
+		System.out.println(getEvenPartitions(intArray));
+		//System.out.println(getOddSquarePartitions(intArray));
+		System.out.println(getOddLinearPartitions(intArray));
+	}	
+	
+	/**
+	 * Calculates odd Partition combinations. If odd number is encountered, its combinations need to be considered with 
+	 * previous 2 odd numbered occurred. So backtracking is done to sum up all possible combinations till previous to previous
+	 * odd number and value is assigned to DP array element of odd number 
+	 * @param intArray
+	 * @return
+	 */
+	static int getOddSquarePartitions(int[] intArray){
+		int count = 0;
+		oddArray = new int[intArray.length];
+		if(intArray[0]%2!=0)
+			oddArray[0] = 1;
+		else
+			oddArray[0] = 0;
+		if(intArray[1]%2!=0)
+			oddArray[1] = oddArray[0]+1;
+		else
+			oddArray[1] = oddArray[0];
+		for(int i = 2; i < intArray.length; i++){
+			if(intArray[i]%2 != 0){
+				int oddCount = 0;
+				count =0;
+				for(int j = i-1; j >= 0; j--){
+					if(intArray[j]%2==0){
+						count += oddArray[j];
+					}
+					else{
+						if(j==0)
+							count += oddArray[j];
+						else{
+							count += oddArray[j];
+							count += oddArray[j-1];
+						}
+						break;
+					}
+				}
+			}
+			else
+				count = oddArray[i-1];
+			oddArray[i] = count; 
+		}		
+		return count;
+	}
+
+	/**
+	 * This is Dynamic Programming solution for evaluation of odd Partition combinations 
+	 * in linear time. Instead of back-tracking as performed in O(n2) algorithm,
+	 * This O(n) algorithm keeps track of sum of combinations from last odd element and uses that 
+	 * to calculate current combinations if current number is odd, if number is even it continues to track sum
+	 * and updates increments count in DP array by 1; 
+	 * @param intArray
+	 * @return
+	 */
+	private static int getOddLinearPartitions(int[] intArray){
+		//int sum = 0;
+		int sumFromLastOdd = 0;
+		int count = 0;
+		oddArray = new int[intArray.length];
+		if(intArray[0]%2!=0){
+			oddArray[0] = 1;
+			sumFromLastOdd = oddArray[0]; 
+		}
+		else
+			oddArray[0] = 0;
+		if(intArray[1]%2!=0){
+			oddArray[1] = oddArray[0]+1;
+			sumFromLastOdd += oddArray[1];
+		}
+		else{
+			oddArray[1] = oddArray[0];
+			sumFromLastOdd += oddArray[1];
+		}		
+		for(int i = 2; i < intArray.length; i++){
+			count =0;
+			if(intArray[i]%2 != 0){
+				count = sumFromLastOdd;
+				sumFromLastOdd = count+oddArray[i-1];
+			}
+			else{
+				count = oddArray[i-1];
+				sumFromLastOdd += count;
+			}
+			oddArray[i] = count; 
+		}		
+		return oddArray[intArray.length-1];
+	}
+	
+	/**
+	 * Even partitions combinations are counted by doubling whenever sum of numbers 
+	 * till the point in array is found even.
+	 * @param intArray
+	 * @return
+	 */
+	private static int getEvenPartitions(int[] intArray) {
+		int count =0, sum = 0;
+		for(int i =0; i < intArray.length; i++){
+			sum+=intArray[i];
+			if(sum%2==0){
+				if(count==0)
+					count = 1;
+				else
+					count*=2;
+			}
+			else if(i == intArray.length-1){
+				count = 0;
+			}
+		}		
+		return count;
+	}
+}

@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class NegativeCycle {
+	
+	static GraphMatrix  graph;
+	static int noOfVertices;
+	static Scanner s = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	public static void getInput(){
+		noOfVertices = s.nextInt();
+		int noOfEdges = s.nextInt();
+		graph = new GraphMatrix(noOfVertices, true);
+		for(int  i= 0; i<noOfEdges; i++){
+			graph.addEdge(s.nextInt(), s.nextInt(), s.nextInt());
+		}		
+		/*Vertex[] arr = graph.vertices;
+		for(int i = 0; i<arr.length; i++){
+			List<Edge> connected = arr[i].connectedTo;
+			for(int j = 0; j < connected.size; j++ ){
+				System.out.println(arr[i].ID+ " connected to "+connected.get(j).ID);
+			}
+		}*/
+	}
+	
+	public String hasNegativeEdge(){
+		String op = "NO";
+		for(int i =0; i< noOfVertices; i++){
+			for(int j =0; j<noOfVertices; j++){
+				
+			}
+		}
+		return op;
+	}
+	
+}

@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+public class CountShortestPaths {
+	
+	static int noOfVertices, noOfEdges, src, dest;
+	static Graph<Integer> graph;
+	
+	static Scanner s = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		getInput();
+		System.out.println(getShortestPaths());
+	}
+	
+	public static void getInput(){
+		noOfVertices = s.nextInt();
+		noOfEdges = s.nextInt();
+		src = s.nextInt();
+		dest = s.nextInt();
+		graph = new Graph<Integer>(noOfVertices);
+		for(int  i= 0; i<noOfEdges; i++){
+			graph.addEdge(s.nextInt(), s.nextInt(), 0);
+		}		
+		Vertex[] arr = graph.vertices;
+		for(int i = 0; i<arr.length; i++){
+			List<Edge> connected = arr[i].connectedTo;
+			for(int j = 0; j < connected.size; j++ ){
+				System.out.println(arr[i].ID+ " connected to "+connected.get(j).ID);
+			}
+		}
+	}
+	
+	public static int getShortestPaths(){
+		if(src == dest)
+			return 0;
+		System.out.println("path from "+src+" to "+dest);
+		List<Edge> connections = graph.vertices[src].getConnections();
+		int shortestPath = 0, numberOfPaths=0;
+		int noOfShortestPaths[] = new int[noOfVertices], shortestDistance[] = new int[noOfVertices];
+		boolean seen[] = new boolean[noOfVertices];
+		int dist[] = new int[noOfVertices];
+		for(int i = 0; i < noOfVertices; i++){			
+			seen[i] = false;
+		}
+		shortestPath = 0; 
+		List queue = new List();
+		queue.add(src);
+		//seen[src] = true;
+		noOfShortestPaths[src] = 1;
+		while(queue.size!=0){
+			int next = (int)queue.get(0);
+			System.out.println(next+" path "+shortestPath);
+			queue.remove(0);
+			if(next!=src && !seen[next]){
+				List<Edge> innerConnections = graph.vertices[next].getConnections();
+				for(int i = 0; i<innerConnections.size; i++){
+					System.out.println(innerConnections.get(i).ID+" came");
+					if(shortestDistance[innerConnections.get(i).ID] == 0){
+						shortestDistance[innerConnections.get(i).ID]  = shortestDistance[next] + 1;
+						noOfShortestPaths[innerConnections.get(i).ID] += noOfShortestPaths[next]; 
+					}
+					else if(shortestDistance[next] + 1 == shortestDistance[innerConnections.get(i).ID]){
+						noOfShortestPaths[innerConnections.get(i).ID] += noOfShortestPaths[next];
+					}
+					else{
+						seen[innerConnections.get(i).ID] = true;
+					}
+					if(!seen[innerConnections.get(i).ID])
+						queue.add(innerConnections.get(i).ID);
+				}	
+		}
+	}
+		System.out.println("shortest path "+shortestDistance[dest]);
+		return noOfShortestPaths[dest];
+	}	
+}

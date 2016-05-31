@@ -1,0 +1,12 @@
+
+public class NegativeCycle {
+
+	static int noOfVertices, noOfEdges, src, dest;
+	static Graph<Integer> graph;
+
+	
+	public static void main(String[] args) {
+		
+	}
+
+}

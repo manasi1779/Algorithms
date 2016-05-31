@@ -1,0 +1,74 @@
+import java.util.Scanner;
+
+public class CountShortestPaths {
+	
+	static int noOfVertices, noOfEdges, src, dest;
+	static Graph<Integer> graph;
+	
+	static Scanner s = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		getInput();
+		System.out.println(getShortestPaths());
+	}
+	
+	public static void getInput(){
+		noOfVertices = s.nextInt();
+		noOfEdges = s.nextInt();
+		src = s.nextInt();
+		dest = s.nextInt();
+		graph = new Graph<Integer>(noOfVertices);
+		for(int  i= 0; i<noOfEdges; i++){
+			graph.addEdge(s.nextInt(), s.nextInt(), 0);
+		}		
+	}
+	
+	public static int getShortestPaths(){
+		if(src == dest)
+			return 0;
+		List<Edge> connections = graph.vertices[src].getConnections();
+		int shortestPath = 0, numberOfPaths=0;
+		boolean seen[] = new boolean[noOfVertices];
+		int dist[] = new int[noOfVertices], distToDest[] = new int[noOfVertices];
+		for(int i = 0; i < noOfVertices; i++){			
+			seen[i] = false;
+		//	dist[i] = Integer.MAX_VALUE;
+			distToDest[i] = Integer.MAX_VALUE; 
+		}
+		List queue = new List();
+		queue.add(src);
+		seen[src] = true;
+		while(queue.size!=0){
+			int next = (int)queue.get(0); 
+			queue.remove(0);
+			System.out.println("At"+next+" "+dist[next]);
+				List<Edge> innerConnections = graph.vertices[next].getConnections();
+				for(int i = 0; i<innerConnections.size; i++){
+					if(innerConnections.get(i).ID == dest){
+						distToDest[next] = 1;
+						seen[innerConnections.get(i).ID] = false;
+						if(shortestPath ==0){
+							shortestPath = dist[next]+1;
+							numberOfPaths = 1;
+						}
+						else if(dist[next]+1 == shortestPath)
+							numberOfPaths++;
+					}	
+					else{
+						if(!seen[innerConnections.get(i).ID]){
+							queue.add(innerConnections.get(i).ID);
+							dist[innerConnections.get(i).ID] = dist[next]+1;
+							if(distToDest[next] > distToDest[innerConnections.get(i).ID])
+								distToDest[next] = distToDest[innerConnections.get(i).ID]+1;
+						}
+						if(dist[next] + distToDest[next] == shortestPath){
+							numberOfPaths++;
+							System.out.println(numberOfPaths);
+							
+						}												
+					} 
+				}
+		}
+		return numberOfPaths;
+	}	
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;GraphMatrix.java&apos; to &apos;Homework 6/src/(default package)&apos;&#x0D;&#x0A;- Original project: &apos;Homework 5&apos;&#x0D;&#x0A;- Destination element: &apos;Homework 6/src/(default package)&apos;&#x0D;&#x0A;- Original element: &apos;GraphMatrix.java&apos;" description="Copy compilation unit" destination="=Homework 6/src&lt;" element1="/src&lt;{GraphMatrix.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1462330132472" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class NegativeCycle {
+
+	static int noOfVertices, noOfEdges, src, dest;
+	static Graph<Integer> graph;
+	static Scanner s = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	public static void getInput(){
+		noOfVertices = s.nextInt();
+		noOfEdges = s.nextInt();
+		src = s.nextInt();
+		dest = s.nextInt();
+		graph = new Graph<Integer>(noOfVertices, false);
+		for(int  i= 0; i<noOfEdges; i++){
+			graph.addEdge(s.nextInt(), s.nextInt(), s.nextInt());
+		}		
+		/*Vertex[] arr = graph.vertices;
+		for(int i = 0; i<arr.length; i++){
+			List<Edge> connected = arr[i].connectedTo;
+			for(int j = 0; j < connected.size; j++ ){
+				System.out.println(arr[i].ID+ " connected to "+connected.get(j).ID);
+			}
+		}*/
+	}
+	
+	public static boolean hasNegativeEdge(){
+		boolean output = false;
+		int dist[]
+		return output;
+	}
+}

@@ -1,0 +1,4 @@
+Program calculates longest repeating numbers starting from left index and right index and decides the longest streak of repeating numbers in the given range.
+
+It uses Divide and Conquer technique recursively to decide output
+Hence complexity is O(nlogn)
